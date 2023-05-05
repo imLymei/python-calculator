@@ -1,3 +1,4 @@
+import PIL.Image
 import customtkinter as ctk
 import buttons
 import darkdetect
@@ -47,16 +48,27 @@ class Calculator(ctk.CTk):
         self.create_buttons(main_font, result_font)
 
     def create_buttons(self, main_font, result_font):
-        buttons.Button(master=self, function=self.clear, text=settings.OPERATORS['percent']['text'], font=main_font,
+        buttons.Button(master=self, function=self.percent, text=settings.OPERATORS['percent']['text'], font=main_font,
                        col=settings.OPERATORS['percent']['col'], row=settings.OPERATORS['percent']['row'])
-        buttons.Button(master=self, function=self.percent, text=settings.OPERATORS['clear']['text'], font=main_font,
+
+        buttons.Button(master=self, function=self.clear, text=settings.OPERATORS['clear']['text'], font=main_font,
                        col=settings.OPERATORS['clear']['col'], row=settings.OPERATORS['clear']['row'])
+
+        invert_light_image = PIL.Image.open(settings.OPERATORS['invert']['image path']['dark'])
+        invert_dark_image = PIL.Image.open(settings.OPERATORS['invert']['image path']['light'])
+        invert_image = ctk.CTkImage(invert_light_image, invert_dark_image)
+
+        buttons.ImageButton(master=self, function=self.invert, col=settings.OPERATORS['invert']['col'],
+                            row=settings.OPERATORS['invert']['row'], image=invert_image)
 
     def clear(self):
         print('clear')
 
     def percent(self):
         print('percent')
+
+    def invert(self):
+        print('invert')
 
 
 class OutputLabel(ctk.CTkLabel):
