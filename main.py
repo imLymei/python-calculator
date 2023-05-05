@@ -61,6 +61,10 @@ class Calculator(ctk.CTk):
         buttons.ImageButton(master=self, function=self.invert, col=settings.OPERATORS['invert']['col'],
                             row=settings.OPERATORS['invert']['row'], image=invert_image)
 
+        for number, data in settings.NUM_POSITIONS.items():
+            buttons.NumButton(master=self, text=number, function=self.number_pressed, col=data['col'],
+                              row=data['row'], font=main_font, column_span=data['span'])
+
     def clear(self):
         print('clear')
 
@@ -69,6 +73,9 @@ class Calculator(ctk.CTk):
 
     def invert(self):
         print('invert')
+
+    def number_pressed(self, value):
+        print(value)
 
 
 class OutputLabel(ctk.CTkLabel):
